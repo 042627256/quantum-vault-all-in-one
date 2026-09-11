@@ -1,5 +1,6 @@
 'use client';
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { Analytics } from '@vercel/analytics/next';
 import { useState, useEffect } from 'react';
 
 function SplashScreen({ onFinish }) {
@@ -35,7 +36,10 @@ export default function RootLayout({ children }) {
     return (
       <html lang="id">
         <head><script src="https://jsdelivr.net"></script></head>
-        <body><SplashScreen onFinish={() => setShowSplash(false)} /></body>
+        <body>
+          <SplashScreen onFinish={() => setShowSplash(false)} />
+          <Analytics />
+        </body>
       </html>
     );
   }
@@ -46,6 +50,7 @@ export default function RootLayout({ children }) {
         <body className="bg-black text-red-500 flex flex-col items-center justify-center h-screen font-mono text-center px-4">
           <h1 className="text-2xl font-bold">AKSES DITOLAK (DETEKSI ANOMALI)</h1>
           <p className="text-xs text-gray-400 mt-2">Sistem mendeteksi aktivitas otomatis (Bot) atau lingkungan perangkat yang tidak aman.</p>
+          <Analytics />
         </body>
       </html>
     );
@@ -72,9 +77,9 @@ export default function RootLayout({ children }) {
             <div className="fixed top-4 right-4 z-50"><UserButton afterSignOutUrl="/" /></div>
             {children}
           </SignedIn>
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
   );
 }
-
